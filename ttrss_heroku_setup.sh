@@ -19,12 +19,12 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.4.tar.gz
-tar -xvzf 1.7.4.tar.gz
+wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.4.tar.gz -O "1.7.4.tar.gz"
+tar -xvzf "1.7.4.tar.gz"
 cd Tiny-Tiny-RSS-1.7.4
 mv * ../
 cd ..
-rm 1.7.4.tar.gz
+rm "1.7.4.tar.gz"
 rm -r Tiny-Tiny-RSS-1.7.4
 echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's create one, shall we? Y/N: "
@@ -63,6 +63,7 @@ mv mbstring.so ../../../
 cp example-php.ini ../../../php.ini
 cd ../../../
 sudo rm -r heroku-libraries
+heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib
 echo -n "There, now ready to upload your data to Heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
@@ -89,5 +90,9 @@ if [ "$query" == Y ]; then
 else
   echo "Alright, then either run the script manually or update each feed through the online interface"
 fi
-echo "You're app is now created and you can visit it now. The username is admin and the password is password"
+echo "Your app is now created and you can visit it now. The username is admin and the password is password"
+echo -n "Would you like to open your default browser to view it now? Y/N: "
+read query
+if [ "$query" == Y ]; then
 heroku open
+fi
