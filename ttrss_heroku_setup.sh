@@ -89,5 +89,9 @@ if [ "$query" == Y ]; then
 else
   echo "Alright, then either run the script manually or update each feed through the online interface"
 fi
-echo "You're app is now created and you can visit it now. The username is admin and the password is password"
+echo "Your app is now created and you can visit it now. The username is admin and the password is password"
+echo -n "Would you like to open your default browser to view it now? Y/N: "
+read query
+if [ "$query" == Y ]; then
 heroku open
+fi
