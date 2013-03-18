@@ -63,6 +63,7 @@ mv mbstring.so ../../../
 cp example-php.ini ../../../php.ini
 cd ../../../
 sudo rm -r heroku-libraries
+heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib
 echo -n "There, now ready to upload your data to Heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
