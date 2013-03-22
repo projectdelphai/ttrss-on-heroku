@@ -2,6 +2,9 @@ ttrss-on-heroku
 =================
 Reuben Castelino - projectdelphai@gmail.com
 
+UPDATE
+-----------------
+I have found a method to create a ttrss server on heroku that automatically updates itself. I have yet to update the script. If you want to use this script, I would suggest waiting until March 25 at the most (but most probably by March 22). 
 Description
 ---------------
 
