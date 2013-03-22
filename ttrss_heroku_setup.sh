@@ -72,27 +72,40 @@ fi
 git add .
 git commit -m 'first commit'
 git push heroku master
-echo "Creating a script that will update your feeds. This will be placed in /usr/local/bin/updatrss"
-touch updaterss
-cat <<EOF >> updaterss
-#! /bin/sh
-cd $PWD/$appname
-heroku run './php/bin/php -c www/php.ini ./www/update.php -feeds'
+echo "Finished creating the ttrss server. Creating updater application"
+heroku apps:create $appname-updater
+echo "Waiting for application to register . . ."
+sleep 30
+origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postgres://@@'`
+heroku config:add DATABASE_URL=$origdburl --app $appname-updater
+heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib --app $appname-updater
+touch Procfile
+cat <<EOF >> Procfile
+web: sh www/web-boot.sh
+worker: while true; do ./php/bin/php -c www/php.ini ./www/update.php -feeds; sleep 300; done
 EOF
-chmod +x updaterss
-mv updaterss /usr/local/bin/updaterss
-echo -n "The script updaterss was created. Whenever you want, you can update your feeds by running updaterss. Do you want to automate this script for every 30 minutes using a cronjob? Y/N: "
-read query
-if [ "$query" == Y ]; then
-  crontab -l > file
-  echo '*/30 * * * * /usr/local/bin/updaterss' >> file
-  crontab file
-else
-  echo "Alright, then either run the script manually or update each feed through the online interface"
-fi
+touch web-boot.sh
+cat <<EOF >> web-boot.sh
+sed -i 's/^ServerLimit 1/ServerLimit 8/' /app/apache/conf/httpd.conf
+sed -i 's/^MaxClients 1/MaxClients 8/' /app/apache/conf/httpd.conf
+
+sh boot.sh
+EOF
+git remote add $appname-updater git@heroku.com:$appname-updater.git
+git add .
+git commit -m 'creating updater'
+git push heroku master
+git add .
+git commit -m 'finishing updater'
+git push $appname-updater master
+sleep 5
+heroku ps:scale web=0 worker=1 --app $appname-updater
+heroku ps:scale web=0 worker=0 --app $appname
+heroku ps:scale web=1 worker=0 --app $appname
+
 echo "Your app is now created and you can visit it now. The username is admin and the password is password"
 echo -n "Would you like to open your default browser to view it now? Y/N: "
 read query
 if [ "$query" == Y ]; then
-heroku open
+heroku open --app $appname
 fi
