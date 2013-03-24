@@ -19,13 +19,13 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.4.tar.gz -O "1.7.4.tar.gz"
-tar -xvzf "1.7.4.tar.gz"
-cd Tiny-Tiny-RSS-1.7.4
+wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.5.tar.gz -O "1.7.5.tar.gz"
+tar -xvzf "1.7.5.tar.gz"
+cd Tiny-Tiny-RSS-1.7.5
 mv * ../
 cd ..
-rm "1.7.4.tar.gz"
-rm -r Tiny-Tiny-RSS-1.7.4
+rm "1.7.5.tar.gz"
+rm -r Tiny-Tiny-RSS-1.7.5
 echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's create one, shall we? Y/N: "
 read query
@@ -82,7 +82,7 @@ heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib --app $appname-up
 touch Procfile
 cat <<EOF >> Procfile
 web: sh www/web-boot.sh
-worker: while true; do ./php/bin/php -c www/php.ini ./www/update.php -feeds; sleep 300; done
+worker: while true; do ./php/bin/php -c www/php.ini ./www/update.php --feeds; sleep 300; done
 EOF
 touch web-boot.sh
 cat <<EOF >> web-boot.sh
