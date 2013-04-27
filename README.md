@@ -18,6 +18,7 @@ Versions
 
 0.0.3
 Upgrade to 1.7.5
+Upgrade to 1.7.8
 
 0.0.2
 Added environment variables

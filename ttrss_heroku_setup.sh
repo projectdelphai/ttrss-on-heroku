@@ -19,13 +19,13 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.5.tar.gz -O "1.7.5.tar.gz"
-tar -xvzf "1.7.5.tar.gz"
-cd Tiny-Tiny-RSS-1.7.5
+wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.7.8.tar.gz -O "1.7.8.tar.gz"
+tar -xvzf "1.7.8.tar.gz"
+cd Tiny-Tiny-RSS-1.7.8
 mv * ../
 cd ..
-rm "1.7.5.tar.gz"
-rm -r Tiny-Tiny-RSS-1.7.5
+rm "1.7.8.tar.gz"
+rm -r Tiny-Tiny-RSS-1.7.8
 echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's create one, shall we? Y/N: "
 read query
