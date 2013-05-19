@@ -13,17 +13,14 @@ Installation
 ---------------
 Before you start you will need to have installed and set up the [Heroku toolbelt](https://toolbelt.heroku.com/) and [git](http://git-scm.com/downloads). I would strongly recommend that you make sure that you can work with the toolbelt and git so that nothing happens mid-script. Then just place it in a folder where you want to store your local files (to later be uploaded to Heroku) and run it with bash ./ttrss_heroku_setup.sh. Just follow the instruction and hopefully *fingers crossed* it'll work. If anything goes wrong, message me or check my post to see step-by-step instructions. 
 
-Notes
-----------------
-If you cannot login at a fresh install or after an update, disable address checking in your config and reupload your apps.
-
-
-
 Versions
 ----------------
+0.0.4
+Upgrade to 1.7.9
+Fixed database info insertions
+Added more default changes to config.php
 
 0.0.3
-Upgrade to 1.7.9
 Upgrade to 1.7.5
 Upgrade to 1.7.8
 

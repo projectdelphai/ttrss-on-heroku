@@ -1,7 +1,7 @@
 #! /bin/sh
 
 clear
-echo -n "The ttrss code will be placed in a folder under $PWD. Is this okay?? Y/N: " 
+echo -n "The ttrss code will be placed in a folder under $PWD. Is this okay? Y/N: " 
 read query
 if [ "$query" != Y ]; then
   exit 0
@@ -27,7 +27,7 @@ cd ..
 rm "1.7.9.tar.gz"
 rm -r Tiny-Tiny-RSS-1.7.9
 echo -e "\n"
-echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's create one, shall we? Y/N: "
+echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's fix that, shall we? Y/N: "
 read query
 if [ "$query" != Y ]; then
   exit 0
@@ -36,8 +36,8 @@ heroku addons:add heroku-postgresql:dev
 echo -e "\nNow let's work on creating our config"
 sleep 2
 cp config.php-dist config.php
-dbnick=`heroku pg:info | sed 's/=== HEROKU_POSTGRESQL_//' | sed 's/_URL//' | head -n 1`
-dbinfo=`heroku pg:credentials $dbnick | tail -n 1`
+dbnick=`heroku pg:info | sed 's/=== HEROKU_POSTGRESQL_//' | sed 's/_URL (DATABASE_URL)//' | sed 's/_URL//' | head -n 1`
+dbinfo=`heroku pg:credentials $dbnick | head -n 2 | tail -n 1`
 dbname=`echo $dbinfo | sed 's/"dbname=//' | sed 's/ host=.*//g' `
 dbhost=`echo $dbinfo | sed 's/.*host=//g' | sed 's/ port=.*//g'`
 dbport="5432"
@@ -49,6 +49,11 @@ sed -i "s/NAME', "\""fox/NAME', "\""$dbname/g" config.php
 sed -i "s/XXXXXX/$dbpassword/g" config.php
 sed -i s@//define@define@g config.php
 sed -i s@http://yourserver/tt-rss/@https://$appname.herokuapp.com/@g config.php
+sed -i "s/DB_PORT', '')/DB_PORT', '5432'/g" config.php
+sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
+sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
+sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
+exit
 heroku pg:psql $dbnick < schema/ttrss_schema_pgsql.sql
 echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to move on? Y/N: "
 read query
