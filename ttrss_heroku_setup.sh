@@ -53,7 +53,6 @@ sed -i "s/DB_PORT', '')/DB_PORT', '5432'/g" config.php
 sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
 sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
-exit
 heroku pg:psql $dbnick < schema/ttrss_schema_pgsql.sql
 echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to move on? Y/N: "
 read query
