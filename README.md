@@ -16,19 +16,19 @@ Before you start you will need to have installed and set up the [Heroku toolbelt
 Versions
 ----------------
 0.0.4
-Upgrade to 1.7.9
-Fixed database info insertions
-Added more default changes to config.php
+* Upgrade to 1.7.9
+* Fixed database info insertions
+* Added more default changes to config.php
 
 0.0.3
-Upgrade to 1.7.5
-Upgrade to 1.7.8
+* Upgrade to 1.7.5
+* Upgrade to 1.7.8
 
 0.0.2
-Added environment variables
-Self-updates
-Query to open in browser
-Wget filename specification
+* Added environment variables
+* Self-updates
+* Query to open in browser
+* Wget filename specification
 
 0.0.1
-Initial commit
+* Initial commit
