@@ -19,7 +19,7 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz -O "1.8.tar.gz"
+curl https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.8.tar.gz -o "1.8.tar.gz"
 tar -xvzf "1.8.tar.gz"
 cd Tiny-Tiny-RSS-1.8
 mv * ../
