@@ -49,7 +49,7 @@ sed -i "s/NAME', "\""fox/NAME', "\""$dbname/g" config.php
 sed -i "s/XXXXXX/$dbpassword/g" config.php
 sed -i s@//define@define@g config.php
 sed -i s@http://yourserver/tt-rss/@https://$appname.herokuapp.com/@g config.php
-sed -i "s/DB_PORT', '')/DB_PORT', '5432'/g" config.php
+sed -i "s/DB_PORT', '')/DB_PORT', '5432')/g" config.php
 sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
 sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
