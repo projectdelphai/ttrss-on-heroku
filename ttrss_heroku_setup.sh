@@ -10,7 +10,7 @@ echo -e "Good! Let's get started. . .\n"
 echo -e "Testing if necessary packages are installed . . ."
 type heroku >/dev/null 2>&1 || { echo >&2 "I require the heroku-toolbelt but it's not installed.  Aborting."; exit 1; }
 type git >/dev/null 2>&1 || { echo >&2 "I require git but it's not installed.  Aborting."; exit 1; }
-type git >/dev/null 2>&1 || { echo >&2 "I require git but it's not installed.  Aborting."; exit 1; }
+type psql >/dev/null 2>&1 || { echo >&2 "I require psql but it's not installed.  Aborting."; exit 1; }
 echo -e "We have everything we need! Now log in with your heroku account (set one up at https://id.heroku.com/signup)"
 heroku login
 echo -n "What should this app be called? (i.e. the url will look like this: appname.heroku.com ) *TIP* DO NOT NAME IT ttrss *TIP* : "
@@ -53,7 +53,7 @@ sed -i "s/DB_PORT', '')/DB_PORT', '5432')/g" config.php
 sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
 sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
-heroku pg:psql $dbnick < schema/ttrss_schema_pgsql.sql
+cat schema/ttrss_schema_pgsql.sql | heroku pg:psql $dbnick
 echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to move on? Y/N: "
 read query
 if [ "$query" != Y ]; then
