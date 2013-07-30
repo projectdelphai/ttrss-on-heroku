@@ -19,13 +19,13 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-curl https://codeload.github.com/gothfox/Tiny-Tiny-RSS/tar.gz/1.8 -o "1.8.tar.gz"
-tar -xvzf "1.8.tar.gz"
-cd Tiny-Tiny-RSS-1.8
+curl https://codeload.github.com/gothfox/Tiny-Tiny-RSS/tar.gz/1.9 -o "1.9.tar.gz"
+tar -xvzf "1.9.tar.gz"
+cd Tiny-Tiny-RSS-1.9
 mv * ../
 cd ..
-rm "1.8.tar.gz"
-rm -r Tiny-Tiny-RSS-1.8
+rm "1.9.tar.gz"
+rm -r Tiny-Tiny-RSS-1.9
 echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's fix that, shall we? Y/N: "
 read query
@@ -67,7 +67,7 @@ mv mbstring.so ../../../
 cp example-php.ini ../../../php.ini
 cd ../../../
 rm -fr heroku-libraries
-heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib
+heroku config:add LD_LIBRARY_PATH=//app/php/ext:/app/apache/lib
 echo -n "There, now ready to upload your data to Heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
@@ -82,7 +82,7 @@ echo "Waiting for application to register . . ."
 sleep 30
 origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postgres://@@'`
 heroku config:add DATABASE_URL=$origdburl --app $appname-updater
-heroku config:add LD_LIBRARY_PATH=/app/php/ext:/app/apache/lib --app $appname-updater
+heroku config:add LD_LIBRARY_PATH=//app/php/ext:/app/apache/lib --app $appname-updater
 touch Procfile
 cat <<EOF >> Procfile
 web: sh www/web-boot.sh
