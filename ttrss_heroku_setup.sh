@@ -48,7 +48,7 @@ sed -i "s/USER', "\""fox/USER', "\""$dbuser/g" config.php
 sed -i "s/NAME', "\""fox/NAME', "\""$dbname/g" config.php
 sed -i "s/XXXXXX/$dbpassword/g" config.php
 sed -i s@//define@define@g config.php
-sed -i s@http://yourserver/tt-rss/@https://$appname.herokuapp.com/@g config.php
+sed -i s@http://example.org/tt-rss/@https://$appname.herokuapp.com/@g config.php
 sed -i "s/DB_PORT', '')/DB_PORT', '5432')/g" config.php
 sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
@@ -96,9 +96,17 @@ sed -i 's/^MaxClients 1/MaxClients 8/' /app/apache/conf/httpd.conf
 sh boot.sh
 EOF
 git remote add $appname-updater git@heroku.com:$appname-updater.git
-git add .
-git commit -m 'creating updater'
+echo -n "Read to push the application to heroku? Y/N: "
+read query 
+if [ "$query" != Y ]; then
+  exit 0
+fi
 git push heroku master
+echo -n "Read to push the updater to heroku? Y/N: "
+read query 
+if [ "$query" != Y ]; then
+  exit 0
+fi
 git add .
 git commit -m 'finishing updater'
 git push $appname-updater master
