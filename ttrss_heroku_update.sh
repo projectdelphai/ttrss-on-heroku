@@ -42,12 +42,12 @@ if [ "$query" != Y ]; then
 fi
 git add -A
 git commit -m 'upgraded ttrss version'
-git commit heroku master
+git push heroku master
 echo -n "Ready to upload updater to Heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
   exit 0
 fi
-git commit heroku-updater master
+git push $app-updater master
 echo "Removing old folder"
 sudo rm -r $old_folder
