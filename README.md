@@ -20,6 +20,7 @@ To upgrade, place the upgrade script in your ttrss application folder. You will 
 Versions
 ----------------
 0.0.5
+* Upgrade to 1.11
 * Upgrade to 1.9
 * more pauses
 * added upgrade script
