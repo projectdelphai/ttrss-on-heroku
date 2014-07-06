@@ -62,7 +62,7 @@ read query
 if [ "$query" != Y ]; then
   exit 0
 fi
-echo "Let's enable mpbstring for php and we'll be almost done"
+echo "Let's enable mbstring for php and we'll be almost done"
 sleep 5
 git clone https://github.com/yandod/heroku-libraries.git
 cd heroku-libraries/php/mbstring
