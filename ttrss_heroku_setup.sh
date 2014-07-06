@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# Script variables
+version=1.12
+
 clear
 echo -n "The ttrss code will be placed in a folder under $PWD. Is this okay? Y/N: "
 read query
@@ -19,13 +22,13 @@ git init
 heroku create $appname
 echo "Registering application online. . ."
 sleep 20
-curl https://codeload.github.com/gothfox/Tiny-Tiny-RSS/tar.gz/1.11 -o "1.11.tar.gz"
-tar -xvzf "1.11.tar.gz"
-cd Tiny-Tiny-RSS-1.11
+curl https://codeload.github.com/gothfox/Tiny-Tiny-RSS/tar.gz/$version -o "$version\.tar.gz"
+tar -xvzf "$version\.tar.gz"
+cd Tiny-Tiny-RSS-$version
 mv * ../
 cd ..
-rm "1.11.tar.gz"
-rm -r Tiny-Tiny-RSS-1.11
+rm "$version\.tar.gz"
+rm -r Tiny-Tiny-RSS-$version
 echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's fix that, shall we? Y/N: "
 read query
