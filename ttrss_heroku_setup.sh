@@ -99,13 +99,13 @@ sed -i 's/^MaxClients 1/MaxClients 8/' /app/apache/conf/httpd.conf
 sh boot.sh
 EOF
 git remote add $appname-updater git@heroku.com:$appname-updater.git
-echo -n "Read to push the application to heroku? Y/N: "
+echo -n "Ready to push the application to heroku? Y/N: "
 read query 
 if [ "$query" != Y ]; then
   exit 0
 fi
 git push heroku master
-echo -n "Read to push the updater to heroku? Y/N: "
+echo -n "Ready to push the updater to heroku? Y/N: "
 read query 
 if [ "$query" != Y ]; then
   exit 0
