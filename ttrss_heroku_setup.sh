@@ -62,14 +62,8 @@ read query
 if [ "$query" != Y ]; then
   exit 0
 fi
-echo "Let's enable mbstring for php and we'll be almost done"
+echo "Let's configure for php and we'll be almost done"
 sleep 5
-git clone https://github.com/yandod/heroku-libraries.git
-cd heroku-libraries/php/mbstring
-mv mbstring.so ../../../
-cp example-php.ini ../../../php.ini
-cd ../../../
-rm -fr heroku-libraries
 heroku config:add LD_LIBRARY_PATH=//app/php/ext:/app/apache/lib
 echo -n "There, now ready to upload your data to Heroku? Y/N: "
 read query

@@ -10,7 +10,7 @@ old_folder=`find ../ -maxdepth 1 | grep old`
 localuser=`whoami`
 sudo mv $old_folder/.git ./
 mv $old_folder/Procfile ./
-mv $old_folder/mbstring.so ./
+mv $old_folder/composer.json ./
 mv $old_folder/php.ini ./
 mv $old_folder/web-boot.sh ./
 sudo chown -R $localuser:users .git
