@@ -64,7 +64,6 @@ if [ "$query" != Y ]; then
 fi
 echo "Let's configure for php and we'll be almost done"
 sleep 5
-heroku config:add LD_LIBRARY_PATH=//app/php/ext:/app/apache/lib
 echo -n "There, now ready to upload your data to Heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
@@ -79,18 +78,17 @@ echo "Waiting for application to register . . ."
 sleep 30
 origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postgres://@@'`
 heroku config:add DATABASE_URL=$origdburl --app $appname-updater
-heroku config:add LD_LIBRARY_PATH=//app/php/ext:/app/apache/lib --app $appname-updater
 touch Procfile
 cat <<EOF >> Procfile
 web: sh www/web-boot.sh
-worker: while true; do ./php/bin/php -c www/php.ini ./www/update.php --feeds; sleep 300; done
+worker: while true; do php ~/update.php --feeds; sleep 300; done
 EOF
 touch web-boot.sh
 cat <<EOF >> web-boot.sh
-sed -i 's/^ServerLimit 1/ServerLimit 8/' /app/apache/conf/httpd.conf
-sed -i 's/^MaxClients 1/MaxClients 8/' /app/apache/conf/httpd.conf
+sed -i 's/^ServerLimit 1/ServerLimit 8/' ~/.heroku/php/etc/apache2/httpd.conf
+sed -i 's/^MaxClients 1/MaxClients 8/' ~/.heroku/php/etc/apache2/httpd.conf
 
-sh boot.sh
+sh ~/vendor/bin/heroku-php-apache2
 EOF
 git remote add $appname-updater git@heroku.com:$appname-updater.git
 echo -n "Ready to push the application to heroku? Y/N: "
