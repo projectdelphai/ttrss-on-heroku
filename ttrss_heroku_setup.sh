@@ -7,7 +7,7 @@ clear
 echo -n "The ttrss code will be placed in a folder under $PWD. Is this okay? Y/N: "
 read query
 if [ "$query" != Y ]; then
-  exit 0
+   exit 0
 fi
 echo -e "Good! Let's get started. . .\n"
 echo -e "Testing if necessary packages are installed . . ."
@@ -33,7 +33,7 @@ echo -e "\n"
 echo -n "Finished with the source code files. Right now there's no proper configuration or database to store our feeds. Let's fix that, shall we? Y/N: "
 read query
 if [ "$query" != Y ]; then
-  exit 0
+   exit 0
 fi
 heroku addons:add heroku-postgresql:dev
 echo -e "\nNow let's work on creating our config"
@@ -57,17 +57,10 @@ sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
 sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
 cat schema/ttrss_schema_pgsql.sql | heroku pg:psql $dbnick
-echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to move on? Y/N: "
+echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to upload to server? Y/N: "
 read query
 if [ "$query" != Y ]; then
-  exit 0
-fi
-echo "Let's configure for php and we'll be almost done"
-sleep 5
-echo -n "There, now ready to upload your data to Heroku? Y/N: "
-read query
-if [ "$query" != Y ]; then
-  exit 0
+   exit 0
 fi
 git add .
 git commit -m 'first commit'
@@ -80,7 +73,7 @@ origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postg
 heroku config:add DATABASE_URL=$origdburl --app $appname-updater
 touch Procfile
 cat <<EOF >> Procfile
-web: sh www/web-boot.sh
+web: sh ~/web-boot.sh
 worker: while true; do php ~/update.php --feeds; sleep 300; done
 EOF
 touch web-boot.sh
@@ -88,17 +81,19 @@ cat <<EOF >> web-boot.sh
 sed -i 's/^ServerLimit 1/ServerLimit 8/' ~/.heroku/php/etc/apache2/httpd.conf
 sed -i 's/^MaxClients 1/MaxClients 8/' ~/.heroku/php/etc/apache2/httpd.conf
 EOF
+chmod +x web-boot.sh
 git remote add $appname-updater git@heroku.com:$appname-updater.git
 echo -n "Ready to push the application to heroku? Y/N: "
 read query 
 if [ "$query" != Y ]; then
-  exit 0
+   exit 0
 fi
+git add .
 git push heroku master
 echo -n "Ready to push the updater to heroku? Y/N: "
 read query 
 if [ "$query" != Y ]; then
-  exit 0
+   exit 0
 fi
 git add .
 git commit -m 'finishing updater'
@@ -112,5 +107,5 @@ echo "Your app is now created and you can visit it now. The username is admin an
 echo -n "Would you like to open your default browser to view it now? Y/N: "
 read query
 if [ "$query" == Y ]; then
-heroku open --app $appname
+   heroku open --app $appname
 fi
