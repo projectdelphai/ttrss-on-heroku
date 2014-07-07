@@ -11,7 +11,6 @@ localuser=`whoami`
 sudo mv $old_folder/.git ./
 mv $old_folder/Procfile ./
 mv $old_folder/composer.json ./
-mv $old_folder/php.ini ./
 mv $old_folder/web-boot.sh ./
 sudo chown -R $localuser:users .git
 echo "Creating new config file using old values"
