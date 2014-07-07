@@ -57,20 +57,11 @@ sed -i "s/SIMPLE_UPDATE_MODE', false)/SIMPLE_UPDATE_MODE', true)/g" config.php
 sed -i "s/FORCE_ARTICLE_PURGE', 0/FORCE_ARTICLE_PURGE', 1/g" config.php
 sed -i "s/SESSION_CHECK_ADDRESS', 1/SESSION_CHECK_ADDRESS', 0/g" config.php
 cat schema/ttrss_schema_pgsql.sql | heroku pg:psql $dbnick
-echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to upload to server? Y/N: "
+echo -n "The configuration file is now completed. Check it out and edit any more options if you need to later. The database has also been created. Ready to upload to heroku? Y/N: "
 read query
 if [ "$query" != Y ]; then
    exit 0
 fi
-git add .
-git commit -m 'first commit'
-git push heroku master
-echo "Finished creating the ttrss server. Creating updater application"
-heroku apps:create $appname-updater
-echo "Waiting for application to register . . ."
-sleep 30
-origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postgres://@@'`
-heroku config:add DATABASE_URL=$origdburl --app $appname-updater
 touch Procfile
 cat <<EOF >> Procfile
 web: ~/web-boot.sh
@@ -84,15 +75,16 @@ sed -i 's/^MaxClients 1/MaxClients 8/' ~/.heroku/php/etc/apache2/httpd.conf
 vendor/bin/heroku-php-apache2
 EOF
 chmod +x web-boot.sh
-git remote add $appname-updater git@heroku.com:$appname-updater.git
-echo -n "Ready to push the application to heroku? Y/N: "
-read query 
-if [ "$query" != Y ]; then
-   exit 0
-fi
 git add .
-git commit -m 'added procfile and web-boot.sh'
+git commit -m 'first commit'
 git push heroku master
+echo "Finished creating the ttrss server. Creating updater application"
+heroku apps:create $appname-updater
+echo "Waiting for application to register . . ."
+sleep 30
+origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postgres://@@'`
+heroku config:add DATABASE_URL=$origdburl --app $appname-updater
+git remote add $appname-updater git@heroku.com:$appname-updater.git
 echo -n "Ready to push the updater to heroku? Y/N: "
 read query 
 if [ "$query" != Y ]; then
