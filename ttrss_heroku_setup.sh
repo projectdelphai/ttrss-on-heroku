@@ -87,8 +87,6 @@ touch web-boot.sh
 cat <<EOF >> web-boot.sh
 sed -i 's/^ServerLimit 1/ServerLimit 8/' ~/.heroku/php/etc/apache2/httpd.conf
 sed -i 's/^MaxClients 1/MaxClients 8/' ~/.heroku/php/etc/apache2/httpd.conf
-
-sh ~/vendor/bin/heroku-php-apache2
 EOF
 git remote add $appname-updater git@heroku.com:$appname-updater.git
 echo -n "Ready to push the application to heroku? Y/N: "
