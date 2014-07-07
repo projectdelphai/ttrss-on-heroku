@@ -73,13 +73,15 @@ origdburl=`heroku config --app $appname | head -n 2 | tail -n 1 | sed 's@.*postg
 heroku config:add DATABASE_URL=$origdburl --app $appname-updater
 touch Procfile
 cat <<EOF >> Procfile
-web: sh ~/web-boot.sh
+web: ~/web-boot.sh
 worker: while true; do php ~/update.php --feeds; sleep 300; done
 EOF
 touch web-boot.sh
 cat <<EOF >> web-boot.sh
 sed -i 's/^ServerLimit 1/ServerLimit 8/' ~/.heroku/php/etc/apache2/httpd.conf
 sed -i 's/^MaxClients 1/MaxClients 8/' ~/.heroku/php/etc/apache2/httpd.conf
+
+vendor/bin/heroku-php-apache2
 EOF
 chmod +x web-boot.sh
 git remote add $appname-updater git@heroku.com:$appname-updater.git
