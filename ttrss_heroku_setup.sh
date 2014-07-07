@@ -23,7 +23,7 @@ heroku create $appname
 echo "Registering application online. . ."
 sleep 20
 curl https://codeload.github.com/gothfox/Tiny-Tiny-RSS/tar.gz/$version -o "$version\.tar.gz"
-tar -xvzf "$version\.tar.gz"
+tar -xzf "$version\.tar.gz"
 cd Tiny-Tiny-RSS-$version
 mv * ../
 cd ..
