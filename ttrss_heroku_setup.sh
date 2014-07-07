@@ -89,6 +89,7 @@ if [ "$query" != Y ]; then
    exit 0
 fi
 git add .
+git commit -m 'added procfile and web-boot.sh'
 git push heroku master
 echo -n "Ready to push the updater to heroku? Y/N: "
 read query 
