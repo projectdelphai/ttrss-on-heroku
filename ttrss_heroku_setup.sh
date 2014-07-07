@@ -18,6 +18,12 @@ echo -e "We have everything we need! Now log in with your heroku account (set on
 heroku login
 echo -n "What should this app be called? (i.e. the url will look like this: appname.heroku.com ) *TIP* DO NOT NAME IT ttrss *TIP* : "
 read appname
+echo -n "$appname is going to be created and git will begin tracking with heroku, rather than the repository you downloaded this from. Is this okay? Y/N: "
+read query
+if [ "$query" != Y ]; then
+   exit 0
+fi
+git remote rm origin
 git init
 heroku create $appname
 echo "Registering application online. . ."
