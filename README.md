@@ -11,7 +11,7 @@ I wrote a [second post](http://projectdelphai.github.com/blog/2013/03/23/tt-rss-
 
 Installation
 ---------------
-Before you start you will need to have installed and set up the [Heroku toolbelt](https://toolbelt.heroku.com/) and [git](http://git-scm.com/downloads). I would strongly recommend that you make sure that you can work with the toolbelt and git so that nothing happens mid-script. Then just place it in a folder where you want to store your local files (to later be uploaded to Heroku) and run it with bash ./ttrss_heroku_setup.sh. Just follow the instruction and hopefully *fingers crossed* it'll work. If anything goes wrong, message me or check my post to see step-by-step instructions. 
+Before you start you will need to have installed and set up the [heroku-toolbelt](https://toolbelt.heroku.com/) and [git](http://git-scm.com/downloads). You must also have `PostgreSQL` installed, which should be available in the package manager of your choice. If you are running Mac OSX, you must replace the built-in sed command with GNU sed, which is available through Homebrew using `brew install gnu-sed` and following the postinstallation instructions. I would strongly recommend that you make sure that you can work with the toolbelt and git so that nothing happens mid-script. Then just place it in a folder where you want to store your local files (to later be uploaded to Heroku) and run it with bash ./ttrss_heroku_setup.sh. Just follow the instruction and hopefully *fingers crossed* it'll work. If anything goes wrong, message me or check my post to see step-by-step instructions. 
 
 Upgrading
 ---------------
