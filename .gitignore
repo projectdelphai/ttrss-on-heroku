@@ -1,0 +1,4 @@
+src/*
+!src/composer.json
+!src/composer.lock
+
