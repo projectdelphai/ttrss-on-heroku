@@ -1,5 +1,9 @@
+This script is actually deprecated and not maintained anymore for various reasons primarily Heroku doesn't allow file access easily and they limited the uptime of dynos for their free tier. I would recommend using inoreader (which I'm currently trying), feedly, or hosting tt-rss locally. 
+
+
 ttrss-on-heroku
 =================
+
 Reuben Castelino - projectdelphai@gmail.com
 
 Description
